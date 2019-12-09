@@ -37,6 +37,7 @@ class IntensifyImageDelegate {
 
     private Callback mCallback;
 
+    //获取屏幕宽高
     private DisplayMetrics mDisplayMetrics;
 
     private IntensifyImageHandler mHandler;
@@ -57,7 +58,8 @@ class IntensifyImageDelegate {
 
     private boolean mIsVertical = true;
 
-    //todo 区域加载显示的区域？
+    //图片的宽高
+    //始终表示着真正的图片的边界，需要计算显示的就是与可视区域的交集部分，每次当缩放，滑动等操作时都会去计算并修改RectF对象
     private RectF mImageArea = new RectF();
 
     private Matrix mMatrix = new Matrix();
@@ -161,6 +163,7 @@ class IntensifyImageDelegate {
 
     //@WorkerThread
     private void initScaleType(Rect drawingRect) {
+        //图片大小
         RectF imageArea = new RectF(0, 0, mImage.mImageWidth, mImage.mImageHeight);
 
         // 是否为垂直型图片
@@ -551,6 +554,7 @@ class IntensifyImageDelegate {
         mCallback.onScaleChange(getScale());
     }
 
+
     public List<ImageDrawable> obtainImageDrawables(Rect drawingRect) {
         if (Utils.isEmpty(drawingRect) || isNeedPrepare(drawingRect)) {
             return Collections.emptyList();
@@ -559,6 +563,7 @@ class IntensifyImageDelegate {
         ArrayList<ImageDrawable> drawables = obtainBaseDrawables();
         Logger.e(TAG,"ArrayList<ImageDrawable> drawables:"+drawables.size());
 
+        //之前有 prepareDraw(Rect rect) 准备好mDrawables
         drawables.addAll(mDrawables);
         Logger.e(TAG,"ArrayList<ImageDrawable> drawables  addall:"+drawables.size());
         if (!Utils.equals(mImage.mCurrentState, Pair.create(mImageArea, drawingRect))) {
@@ -678,6 +683,7 @@ class IntensifyImageDelegate {
         }
     }
 
+    //todo ？？
     public static class ImageDrawable {
         Bitmap mBitmap;
         Rect mSrc;

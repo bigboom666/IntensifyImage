@@ -9,6 +9,7 @@ import android.graphics.Rect;
 /**
  * Created by felix on 16/5/18.
  */
+//IntensifyImageCache是按照精度，缓存了不同的ImageCache，它的键值是精度，值是ImageCache
 class IntensifyImageCache extends IntensifyCache<Integer, IntensifyImageCache.ImageCache, Void> {
 
     private int mSubMaxSize;
@@ -17,6 +18,8 @@ class IntensifyImageCache extends IntensifyCache<Integer, IntensifyImageCache.Im
 
     private int BLOCK_SIZE = 300;
 
+    //maxSize:最多几个imageCache缓存对象
+    //subMaxSize:imageCache缓存的的像素数量
     public IntensifyImageCache(
             int maxSize, int subMaxSize, int blockSize, BitmapRegionDecoder bitmapRegionDecoder) {
         super(maxSize);
@@ -26,6 +29,8 @@ class IntensifyImageCache extends IntensifyCache<Integer, IntensifyImageCache.Im
         if (mRegionDecoder == null) {
             throw new IllegalArgumentException("BitmapRegionDecoder is null.");
         }
+
+        //原始图片宽高
         mOriginalRect = new Rect(0, 0, mRegionDecoder.getWidth(), mRegionDecoder.getHeight());
     }
 
@@ -34,17 +39,23 @@ class IntensifyImageCache extends IntensifyCache<Integer, IntensifyImageCache.Im
         if (oldValue != null) oldValue.evictAll();
     }
 
+    //创建key对应的数据
     @Override
     protected ImageCache create(Integer key) {
         return new ImageCache(mSubMaxSize, key);
     }
 
+
+
+
+//加载指定坐标对应的Bitmap对象，以300大小的块和原始图像的交集
     public class ImageCache extends IntensifyCache<Point, Bitmap, Integer> {
 
         public ImageCache(int maxSize, Integer level) {
             super(maxSize, level);
         }
 
+        //还他娘是个递归
         @Override
         protected Bitmap alternative(Point key, Integer level) {
             if (!this.level.equals(level)) {

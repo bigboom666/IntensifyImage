@@ -33,7 +33,7 @@ public class IntensifyImageView extends View implements IntensifyImage,
 
     private Paint mBoardPaint;
 
-    //TODO 画的区域？view区域？  什么时候初始化
+    //TODO 需要画的区域
     private volatile Rect mDrawingRect = new Rect();
 
     private OverScroller mScroller;
