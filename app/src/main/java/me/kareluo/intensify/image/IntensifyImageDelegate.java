@@ -516,7 +516,7 @@ class IntensifyImageDelegate {
         }
         mMatrix.setScale(scale, scale, focusX, focusY);
         mMatrix.mapRect(mImageArea);
-        requestScaleChange();
+        //requestScaleChange();
     }
 
     public void zoomScale(Rect drawingRect, float scale, float focusX, float focusY) {
@@ -550,9 +550,9 @@ class IntensifyImageDelegate {
         mCallback.onRequestAwakenScrollBars();
     }
 
-    private void requestScaleChange() {
+ /*   private void requestScaleChange() {
         mCallback.onScaleChange(getScale());
-    }
+    }*/
 
 
     public List<ImageDrawable> obtainImageDrawables(Rect drawingRect) {
@@ -640,7 +640,7 @@ class IntensifyImageDelegate {
         public void onAnimationUpdate(ValueAnimator animation) {
             Float value = (Float) animation.getAnimatedValue();
             Utils.evaluate(value, mStartRect, mEndRect, mImageArea);
-            requestScaleChange();
+           // requestScaleChange();
             requestInvalidate();
             requestAwakenScrollBars();
             Logger.d(TAG, "Anim Update.");
@@ -744,7 +744,7 @@ class IntensifyImageDelegate {
 
         boolean onRequestAwakenScrollBars();
 
-        void onScaleChange(float scale);
+       // void onScaleChange(float scale);
     }
 
     private class IntensifyImageHandler extends Handler {

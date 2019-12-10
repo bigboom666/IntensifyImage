@@ -26,7 +26,8 @@ public class IntensifyImageAttacher implements View.OnTouchListener {
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        return mGestureDetector.onTouchEvent(event) | mScaleGestureDetector.onTouchEvent(event);
+        //return mGestureDetector.onTouchEvent(event) | mScaleGestureDetector.onTouchEvent(event);
+        return mScaleGestureDetector.onTouchEvent(event)| mGestureDetector.onTouchEvent(event) ;
     }
 
     private class OnScaleGestureAdapter extends ScaleGestureDetector.SimpleOnScaleGestureListener {
@@ -70,15 +71,15 @@ public class IntensifyImageAttacher implements View.OnTouchListener {
             return true;
         }
 
-        @Override
+/*        @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
             mIntensifyView.singleTap(e.getX(), e.getY());
-            return false;
+            return true;
         }
 
         @Override
         public void onLongPress(MotionEvent e) {
             mIntensifyView.longPress(e.getX(), e.getY());
-        }
+        }*/
     }
 }

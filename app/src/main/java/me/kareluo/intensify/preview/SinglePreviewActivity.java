@@ -23,7 +23,7 @@ import me.kareluo.intensify.image.IntensifyImageView;
  * Created by felix on 15/12/25.
  */
 public class SinglePreviewActivity extends AppCompatActivity implements
-        IntensifyImage.OnScaleChangeListener, SeekBar.OnSeekBarChangeListener {
+        /*IntensifyImage.OnScaleChangeListener,*/ SeekBar.OnSeekBarChangeListener {
     private static final String TAG = "SinglePreviewActivity";
 
     private IntensifyImageView mIntensifyImageView;
@@ -54,7 +54,7 @@ public class SinglePreviewActivity extends AppCompatActivity implements
         mRootView = findViewById(R.id.ll_root);
         mIntensifyImageView = (IntensifyImageView) findViewById(R.id.intensify_image);
         assert mIntensifyImageView != null;
-        mIntensifyImageView.setOnScaleChangeListener(this);
+       // mIntensifyImageView.setOnScaleChangeListener(this);
 
         mViewSwitcher = (ViewSwitcher) findViewById(R.id.vs_switcher);
         mCurrentScaleText = (TextView) findViewById(R.id.tv_cur_scale);
@@ -107,7 +107,7 @@ public class SinglePreviewActivity extends AppCompatActivity implements
         mMinimumScaleText.setText(String.format(Locale.CHINA, "%.2f", mIntensifyImageView.getMinimumScale()));
         mMaximumScaleText.setText(String.format(Locale.CHINA, "%.2f", maxScale));
         mScaleWidth = maxScale - mIntensifyImageView.getMinimumScale();
-        onScaleChange(mIntensifyImageView.getScale());
+        //onScaleChange(mIntensifyImageView.getScale());
     }
 
     private void chooseAssetsPictures() {
@@ -170,6 +170,7 @@ public class SinglePreviewActivity extends AppCompatActivity implements
                 .show();
     }
 
+/*
     @Override
     public void onScaleChange(float scale) {
         mCurrentScaleText.setText(String.format(Locale.CHINA, "缩放值：%f", scale));
@@ -177,6 +178,7 @@ public class SinglePreviewActivity extends AppCompatActivity implements
                 mIntensifyImageView.getMinimumScale()) / mScaleWidth * mSeekBar.getMax());
         mSeekBar.setProgress(Math.min(Math.max(progress, 0), mSeekBar.getMax()));
     }
+*/
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

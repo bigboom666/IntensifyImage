@@ -40,11 +40,12 @@ public interface IntensifyImage {
 
     void home();
 
-    void singleTap(float x, float y);
+/*    void singleTap(float x, float y);
 
-    void doubleTap(float x, float y);
 
-    void longPress(float x, float y);
+
+    void longPress(float x, float y);*/
+void doubleTap(float x, float y);
 
     enum ScaleType {
 
@@ -73,7 +74,7 @@ public interface IntensifyImage {
         final int nativeInt;
     }
 
-    interface OnSingleTapListener {
+/*    interface OnSingleTapListener {
         void onSingleTap(boolean inside);
     }
 
@@ -87,5 +88,5 @@ public interface IntensifyImage {
 
     interface OnScaleChangeListener {
         void onScaleChange(float scale);
-    }
+    }*/
 }

@@ -40,17 +40,17 @@ public class IntensifyImageView extends View implements IntensifyImage,
 
     private IntensifyImageDelegate mDelegate;
 
-    private OnSingleTapListener mOnSingleTapListener;
+/*    private OnSingleTapListener mOnSingleTapListener;
 
     private OnDoubleTapListener mOnDoubleTapListener;
 
     private OnLongPressListener mOnLongPressListener;
 
-    private OnScaleChangeListener mOnScaleChangeListener;
+    private OnScaleChangeListener mOnScaleChangeListener;*/
 
     private volatile boolean vFling = false;
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     public IntensifyImageView(Context context) {
         this(context, null, 0);
@@ -68,7 +68,7 @@ public class IntensifyImageView extends View implements IntensifyImage,
     protected void initialize(Context context, AttributeSet attrs, int defStyleAttr) {
         mDelegate = new IntensifyImageDelegate(getResources().getDisplayMetrics(), this);
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.IntensifyImageView);
+/*        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.IntensifyImageView);
 
         Logger.e(TAG,"initialize before ScaleType");
         mDelegate.setScaleType(ScaleType.valueOf(
@@ -85,7 +85,7 @@ public class IntensifyImageView extends View implements IntensifyImage,
 
         mDelegate.setScale(a.getFloat(R.styleable.IntensifyImageView_scale, -1f));
 
-        a.recycle();
+        a.recycle();*/
 
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
         mPaint.setColor(Color.GREEN);
@@ -296,34 +296,38 @@ public class IntensifyImageView extends View implements IntensifyImage,
         }
     }
 
+/*
     @Override
     public void singleTap(float x, float y) {
         if (mOnSingleTapListener != null) {
             mOnSingleTapListener.onSingleTap(isInside(x, y));
         }
     }
+*/
 
     @Override
     public void doubleTap(float x, float y) {
-        if (mOnDoubleTapListener != null) {
+/*        if (mOnDoubleTapListener != null) {
             if (!mOnDoubleTapListener.onDoubleTap(isInside(x, y))) {
                 nextScale(x, y);
             }
-        } else nextScale(x, y);
+        } else*/ nextScale(x, y);
     }
 
-    @Override
+/*    @Override
     public void longPress(float x, float y) {
         if (mOnLongPressListener != null) {
             mOnLongPressListener.onLongPress(isInside(x, y));
         }
-    }
+    }*/
+/*
 
     public boolean isInside(float x, float y) {
         return mDelegate.getImageArea().contains(x, y);
     }
+*/
 
-    public void setOnSingleTapListener(OnSingleTapListener listener) {
+/*    public void setOnSingleTapListener(OnSingleTapListener listener) {
         mOnSingleTapListener = listener;
     }
 
@@ -341,7 +345,7 @@ public class IntensifyImageView extends View implements IntensifyImage,
 
     public float getBaseScale() {
         return mDelegate.getBaseScale();
-    }
+    }*/
 
     /**
      * 设置过大可能会影响图片的正常显示
@@ -376,10 +380,10 @@ public class IntensifyImageView extends View implements IntensifyImage,
 
     @Override
     public boolean onRequestAwakenScrollBars() {
-        return awakenScrollBars();
+        return false;//awakenScrollBars();
     }
 
-    @Override
+/*    @Override
     public void onScaleChange(final float scale) {
         if (mOnScaleChangeListener != null) {
             post(new Runnable() {
@@ -389,5 +393,5 @@ public class IntensifyImageView extends View implements IntensifyImage,
                 }
             });
         }
-    }
+    }*/
 }
