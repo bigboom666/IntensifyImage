@@ -107,11 +107,11 @@ public class IntensifyImageView extends View implements IntensifyImage,
         mScroller = new OverScroller(context);
     }
 
-    @Override
+/*    @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         mDelegate.onAttached();
-    }
+    }*/
 
     @Override
     protected void onDetachedFromWindow() {

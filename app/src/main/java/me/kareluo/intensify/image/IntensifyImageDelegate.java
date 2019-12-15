@@ -42,7 +42,7 @@ class IntensifyImageDelegate {
 
     private IntensifyImageHandler mHandler;
 
-    private Image mImage;  //持有的图像
+    private Image mImage;  //持有的图像   原始图像信息
 
     private float mBaseScale = 1f;
 
@@ -58,7 +58,7 @@ class IntensifyImageDelegate {
 
     private boolean mIsVertical = true;
 
-    //图片的宽高
+    //初试为图片的大小  后面为放缩的图片的大小
     //始终表示着真正的图片的边界，需要计算显示的就是与可视区域的交集部分，每次当缩放，滑动等操作时都会去计算并修改RectF对象
     private RectF mImageArea = new RectF();
 
@@ -102,9 +102,9 @@ class IntensifyImageDelegate {
         mZoomAnimator.addUpdateListener(new ZoomAnimatorAdapter());
     }
 
-    public void onAttached() {
+/*    public void onAttached() {
 
-    }
+    }*/
 
     public void onDetached() {
         mHandler.removeCallbacksAndMessages(null);
@@ -240,18 +240,39 @@ class IntensifyImageDelegate {
     //@WorkerThread
     private void prepareDraw(Rect rect) {
         float curScale = getScale();
+
+        Log.d(TAG, "mImageArea: "+mImageArea.width() + " , " +mImageArea.height());
+        Log.d(TAG, "mImage: "+mImage.mImageWidth + " , " +mImage.mImageHeight);
+        Log.d(TAG, "curScale: "+curScale);
+
+        Log.d(TAG, "drawingRect "+rect);
+
+
         int sampleSize = getSampleSize(1f / curScale);
+
+
         Pair<RectF, Rect> newState = Pair.create(new RectF(mImageArea), new Rect(rect));
 
+
+        Log.d(TAG, "mImage.mImageSampleSize "+mImage.mImageSampleSize);
+        Log.d(TAG, "sampleSize "+sampleSize);
+
+        //初试的采样率不够用的情况下
         if (mImage.mImageSampleSize > sampleSize) {
+
             RectF drawingRect = new RectF(rect);
 
             if (drawingRect.intersect(mImageArea)) {
                 drawingRect.offset(-mImageArea.left, -mImageArea.top);
             }
 
+            Log.d(TAG, "after intersect, drawingRect:"+drawingRect);
+
             float blockSize = BLOCK_SIZE * curScale * sampleSize;
             Rect blocks = Utils.blocks(drawingRect, blockSize);
+
+            Log.d(TAG, "blocks: "+blocks);
+
 
             List<ImageDrawable> drawables = new ArrayList<>();
             int roundLeft = Math.round(mImageArea.left);
@@ -281,6 +302,7 @@ class IntensifyImageDelegate {
                 mDrawables.addAll(drawables);
             }
         } else mDrawables.clear();
+
 
         mImage.mCurrentState = Pair.create(new RectF(mImageArea), new Rect(rect));
     }
@@ -659,6 +681,8 @@ class IntensifyImageDelegate {
 
         IntensifyImageCache mImageCaches;
 
+
+        //图片的大小和要画的区域  构成一个状态
         volatile Pair<RectF, Rect> mCurrentState;
 
         private Image(ImageDecoder decoder) {
@@ -678,7 +702,7 @@ class IntensifyImageDelegate {
             if (mImageCache != null && !mImageCache.isRecycled()) {
                 mImageCache.recycle();
             }
-            mImage.mImageCaches.evictAll();
+            this.mImageCaches.evictAll();
             mCurrentState = null;
         }
     }
